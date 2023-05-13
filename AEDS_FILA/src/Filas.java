@@ -389,10 +389,6 @@ class PrintMovies {
     }
 
 }
-
-
-
-
 public class Filas {
     public static void main(String[] args) {
         MyIO.setCharset("UTF-8");
@@ -419,6 +415,7 @@ public class Filas {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {
+            assert fileRead != null;
             fileRead.fecharArquivo();
         }
 
