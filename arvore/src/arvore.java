@@ -391,7 +391,7 @@ class Filme {
 
     }
 
-    public void Imprimir() {
+    public void imprimir() {
         MyIO.println("[" + this.titulo + "] " + "[" + this.ano_lancamento + "] " + "[" + this.pais_origem + "] "
                 + "[" + this.categoria + "] " + "[" + this.diretor + "] " + "[" + this.ator1 + ", " + this.ator2 + "] "
                 + "[" + this.duracao + "] " + "[" + this.id + "] ");
@@ -404,7 +404,7 @@ class Filme {
 class PrintMovies {
     public static void Print(ArrayList<Filme> filmesArray) {
         for(int i = 0; i < filmesArray.size(); i++) {
-            filmesArray.get(i).Imprimir();
+            filmesArray.get(i).imprimir();
         }
     }
 
@@ -415,7 +415,7 @@ class PrintMovies {
 
 
 
-class Nodo {
+ class Nodo {
     public Filme valor;
     public Nodo esquerda;
     public Nodo direita;
@@ -434,117 +434,113 @@ class Nodo {
 }
 
 
-class ArvoreBinaria {
-    public Nodo raiz;
-    public ArvoreBinaria() {
-        this.raiz = null;
-    }
+ class ArvoreBinaria {
+     public Nodo raiz;
+     public ArvoreBinaria() {
+         this.raiz = null;
+     }
 
-    public ArvoreBinaria(Nodo no) {
-        this.raiz = no;
-    }
+     public ArvoreBinaria(Nodo no) {
+         this.raiz = no;
+     }
 
-    public boolean vazia() {
-        return (this.raiz == null);
-    }
+     public boolean vazia() {
+         return (this.raiz == null);
+     }
 
 
-    public void adicionar(Filme valor) {
-        if(this.raiz == null)
-            this.raiz = new Nodo(valor);
-        else
-            this.inserir(this.raiz, valor);
-    }
+     public void adicionar(Filme valor) {
+         if(this.raiz == null)
+             this.raiz = new Nodo(valor);
+         else
+             this.inserir(this.raiz, valor);
+     }
 
-    private Nodo inserir(Nodo raizSubarvore, Filme valor) {
-        if(raizSubarvore == null) {
-            raizSubarvore = new Nodo(valor);
-        }
-        else {
+     private Nodo inserir(Nodo raizSubarvore, Filme valor) {
+         if(raizSubarvore == null) {
+             raizSubarvore = new Nodo(valor);
+         }
+         else {
 
-            if(compara(valor,raizSubarvore.valor)) {
-                raizSubarvore.direita = this.inserir(raizSubarvore.direita, valor);
-            }
-            else if(compara(raizSubarvore.valor,valor)) {
-                raizSubarvore.esquerda = this.inserir(raizSubarvore.esquerda, valor);
-            }
-            else {
+             if(compara(valor,raizSubarvore.valor)) {
+                 raizSubarvore.direita = this.inserir(raizSubarvore.direita, valor);
+             }
+             else if(compara(raizSubarvore.valor,valor)) {
+                 raizSubarvore.esquerda = this.inserir(raizSubarvore.esquerda, valor);
+             }
+             else {
                 //
-            }
-        }
-        return raizSubarvore;
-    }
+             }
+         }
+         return raizSubarvore;
+     }
 
-    private boolean compara(Filme A, Filme B) {
-        if(A.getLancamento() > B.getLancamento()) {
-            return true; // A > B
-        } else if ( A.getLancamento() < B.getLancamento()) {
-            return false; // A < B
-        } else if ( A.getLancamento() == B.getLancamento()) {
-            if(A.getCategoria().compareTo(B.getCategoria()) > 0) {
-                return true; // A > B
-            } else if ( A.getCategoria().compareTo(B.getCategoria()) < 0) {
-                return false; // A < B
-            } else if ( A.getCategoria().compareTo(B.getCategoria()) == 0) {
-                if(A.getTitulo().compareTo(B.getTitulo()) > 0) {
-                    return true; // A > B
-                } else if ( A.getTitulo().compareTo(B.getTitulo()) < 0) {
-                    return false; // A < B
-                } else if ( A.getTitulo().compareTo(B.getTitulo()) == 0) {
-                    return false;
-                }
-            }
-        }
+     private boolean compara(Filme A, Filme B) {
+         if(A.getLancamento() > B.getLancamento()) {
+             return true; // A > B
+         } else if ( A.getLancamento() < B.getLancamento()) {
+             return false; // A < B
+         } else if ( A.getLancamento() == B.getLancamento()) {
+             if(A.getCategoria().compareTo(B.getCategoria()) > 0) {
+                 return true; // A > B
+             } else if ( A.getCategoria().compareTo(B.getCategoria()) < 0) {
+                 return false; // A < B
+             } else if ( A.getCategoria().compareTo(B.getCategoria()) == 0) {
+                 if(A.getTitulo().compareTo(B.getTitulo()) > 0) {
+                     return true; // A > B
+                 } else if ( A.getTitulo().compareTo(B.getTitulo()) < 0) {
+                     return false; // A < B
+                 } else if ( A.getTitulo().compareTo(B.getTitulo()) == 0) {
+                     return false;
+                 }
+             }
+         }
 
 
-        return true;
-    }
+         return true;
+     }
 
-    public void imprimirPreOrdem(Nodo raizSubarvore) {
-        if(raizSubarvore != null) {
-            System.out.println(raizSubarvore.valor.getTitulo());
-            imprimirPreOrdem(raizSubarvore.esquerda);
-            imprimirPreOrdem(raizSubarvore.direita);
-        }
-    }
+     public void imprimirPreOrdem(Nodo raizSubarvore) {
+         if(raizSubarvore != null) {
+             System.out.println(raizSubarvore.valor.getTitulo());
+             imprimirPreOrdem(raizSubarvore.esquerda);
+             imprimirPreOrdem(raizSubarvore.direita);
+         }
+     }
 
-    public boolean buscar(String titulo) {
-        return buscarNaSubarvore(raiz, titulo);
-    }
 
-    private boolean buscarNaSubarvore(Nodo raizSubarvore, String titulo) {
-        if (raizSubarvore == null) {
-            return false; // Node not found
-        }
 
-        if (raizSubarvore.valor.getTitulo().equals(titulo)) {
-            System.out.println("SIM");
-            raizSubarvore.valor.Imprimir();
 
-            return true; // Node found
-        }
+     public void buscar(String titulo) {
+         if (buscarNo(raiz, titulo)) {
+             System.out.println("Yes");
+         } else {
+             System.out.println("No");
+         }
+     }
 
-        // Recursively search in the left and right subtrees
-        if (buscarNaSubarvore(raizSubarvore.esquerda, titulo) || buscarNaSubarvore(raizSubarvore.direita, titulo)) {
-            raizSubarvore.valor.Imprimir();
-            return true; // Node found
-        }
+     private boolean buscarNo(Nodo raizSubarvore, String titulo) {
+         if (raizSubarvore == null) {
+             return false;
+         }
+         raizSubarvore.valor.imprimir();
+         if (raizSubarvore.valor.getTitulo().equals(titulo)) {
+             return true;
+         }
 
-        return false;
-    }
+         return buscarNo(raizSubarvore.esquerda, titulo) || buscarNo(raizSubarvore.direita, titulo);
+     }
 
 
 
 
 
-
-
-}
+ }
 
 
 
 
-public class arvore {
+    public class arvore {
     public static void main(String[] args) {
         MyIO.setCharset("UTF-8");
         ArvoreBinaria ArvoreBinaria = new ArvoreBinaria();
@@ -601,13 +597,16 @@ public class arvore {
 
 
 
+       // for(int k = 0 ; k < FilmeConsole.size(); k++) {
+        //    ArvoreBinaria.buscar(FilmeConsole.get(k).getTitulo());
+        //}
 
+       //for(int k = 0; k < FilmeConsole.size(); k++) {
+          // System.out.println(ArvoreBinaria.buscar(FilmeConsole.get(k).getTitulo()));
+
+      // }
 
         ArvoreBinaria.buscar("22 July");
-
-
-
-
 
 
     }
