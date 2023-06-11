@@ -332,7 +332,7 @@ class Path {
         if (os.contains("Windows"))
             return "files\\filmes.txt";
         else
-            return "/home/user/Documents/Programs/Java Homework/arvore/files/filmes.txt";
+            return "/home/user/Documents/Programs/Java-Homework/arvore/files/filmes.txt";
     }
 }
 
@@ -500,16 +500,38 @@ class PrintMovies {
          return true;
      }
 
-
      public void imprimirPreOrdem(Nodo raizSubarvore) {
          if(raizSubarvore != null) {
-             System.out.println(raizSubarvore.valor + ", ");
+             System.out.println(raizSubarvore.valor.getTitulo());
              imprimirPreOrdem(raizSubarvore.esquerda);
              imprimirPreOrdem(raizSubarvore.direita);
          }
      }
 
-}
+     public void buscar(String titulo) {
+         if (buscarNo(raiz, titulo)) {
+             System.out.println("Yes");
+         } else {
+             System.out.println("No");
+         }
+     }
+
+     private boolean buscarNo(Nodo raizSubarvore, String titulo) {
+         if (raizSubarvore == null) {
+             return false;
+         }
+
+         if (raizSubarvore.valor.getTitulo().equals(titulo)) {
+             return true;
+         }
+
+         return buscarNo(raizSubarvore.esquerda, titulo) || buscarNo(raizSubarvore.direita, titulo);
+     }
+
+
+
+
+ }
 
 
 
@@ -518,7 +540,6 @@ class PrintMovies {
     public static void main(String[] args) {
         MyIO.setCharset("UTF-8");
         ArvoreBinaria ArvoreBinaria = new ArvoreBinaria();
-        ArrayList<Filme> FilmeFinal = new ArrayList<Filme>();
         ArrayList<Filme> FilmeArquivos = new ArrayList<Filme>();
         ArrayList<Filme> FilmeConsole = new ArrayList<>();
 
@@ -570,7 +591,19 @@ class PrintMovies {
         //ArvoreBinaria.raiz.valor.Imprimir();
         //System.out.print(FilmeConsole.get(0).getTitulo());
 
-        ArvoreBinaria.imprimirPreOrdem(ArvoreBinaria.raiz);
+
+
+        for(int k = 0 ; k < FilmeConsole.size(); k++) {
+            ArvoreBinaria.buscar(FilmeConsole.get(k).getTitulo());
+        }
+
+
+
+
+
+
+
+
 
     }
 
