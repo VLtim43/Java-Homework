@@ -330,7 +330,7 @@ class Path {
     public static String getPath() {
         String os = System.getProperty("os.name");
         if (os.contains("Windows"))
-            return "files\\filmes.txt";
+            return "file\\filmes.txt";
         else
             return "/home/user/Documents/Programs/Java-Homework/arvore/files/filmes.txt";
     }
@@ -339,19 +339,77 @@ class Path {
 class Filme {
     // Attributes
     private String id;
-
-    public int getLancamento() {
-        return ano_lancamento;
+    public String getId() {
+        return id;
     }
 
-    public String getCategoria() {
-        return categoria;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTitulo() {
         return titulo;
     }
 
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getDiretor() {
+        return diretor;
+    }
+
+    public void setDiretor(String diretor) {
+        this.diretor = diretor;
+    }
+
+    public String getAtor1() {
+        return ator1;
+    }
+
+    public void setAtor1(String ator1) {
+        this.ator1 = ator1;
+    }
+
+    public String getAtor2() {
+        return ator2;
+    }
+
+    public void setAtor2(String ator2) {
+        this.ator2 = ator2;
+    }
+
+    public String getDuracao() {
+        return duracao;
+    }
+
+    public void setDuracao(String duracao) {
+        this.duracao = duracao;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public String getPais_origem() {
+        return pais_origem;
+    }
+
+    public void setPais_origem(String pais_origem) {
+        this.pais_origem = pais_origem;
+    }
+
+    public int getAno_lancamento() {
+        return ano_lancamento;
+    }
+
+    public void setAno_lancamento(int ano_lancamento) {
+        this.ano_lancamento = ano_lancamento;
+    }
 
     private String titulo;
     private String diretor;
@@ -363,9 +421,8 @@ class Filme {
     private int ano_lancamento;
 
     // Constructor por leitura
-    public Filme(String Linha, Boolean isArquivo) {
+    public Filme(String Linha) {
 
-        if (isArquivo) {
             String[] Valores = Linha.split("#");
             this.id = Valores[0];
             this.titulo = Valores[1];
@@ -376,19 +433,19 @@ class Filme {
             this.duracao = Valores[6];
             this.categoria = Valores[7];
             this.pais_origem = Valores[8];
-        } else {
-            String[] Valores = Linha.split(";");
-            this.id = "null";
-            this.titulo = Valores[0];
-            this.diretor = "null";
-            this.ator1 = "null";
-            this.ator2 = "null";
-            this.ano_lancamento =  Integer.parseInt(Valores[1]);
-            this.duracao = Valores[2];
-            this.categoria = "null";
-            this.pais_origem = "null";
-        }
 
+    }
+
+    public Filme(Filme newFilme) {
+        this.id = newFilme.getId();
+        this.titulo = newFilme.getTitulo();
+        this.diretor = newFilme.getDiretor();
+        this.ator1 = newFilme.getAtor1();
+        this.ator2 = newFilme.getAtor2();
+        this.ano_lancamento =  newFilme.getAno_lancamento();
+        this.duracao = newFilme.getDuracao();
+        this.categoria = newFilme.getCategoria();
+        this.pais_origem = newFilme.getPais_origem();
     }
 
     public void imprimir() {
@@ -415,7 +472,7 @@ class PrintMovies {
 
 
 
- class Nodo {
+class Nodo {
     public Filme valor;
     public Nodo esquerda;
     public Nodo direita;
@@ -434,118 +491,122 @@ class PrintMovies {
 }
 
 
- class ArvoreBinaria {
-     public Nodo raiz;
-     public ArvoreBinaria() {
-         this.raiz = null;
-     }
+class ArvoreBinaria {
+    public Nodo raiz;
+    public ArvoreBinaria() {
+        this.raiz = null;
+    }
 
-     public ArvoreBinaria(Nodo no) {
-         this.raiz = no;
-     }
+    public ArvoreBinaria(Nodo no) {
+        this.raiz = no;
+    }
 
-     public boolean vazia() {
-         return (this.raiz == null);
-     }
+    public boolean vazia() {
+        return (this.raiz == null);
+    }
 
 
-     public void adicionar(Filme valor) {
-         if(this.raiz == null)
-             this.raiz = new Nodo(valor);
-         else
-             this.inserir(this.raiz, valor);
-     }
+    public void adicionar(Filme valor) {
+        if(this.raiz == null)
+            this.raiz = new Nodo(valor);
+        else
+            this.inserir(this.raiz, valor);
+    }
 
-     private Nodo inserir(Nodo raizSubarvore, Filme valor) {
-         if(raizSubarvore == null) {
-             raizSubarvore = new Nodo(valor);
-         }
-         else {
+    private Nodo inserir(Nodo raizSubarvore, Filme valor) {
+        if(raizSubarvore == null) {
+            raizSubarvore = new Nodo(valor);
+        }
+        else {
 
-             if(compara(valor,raizSubarvore.valor)) {
-                 raizSubarvore.direita = this.inserir(raizSubarvore.direita, valor);
-             }
-             else if(compara(raizSubarvore.valor,valor)) {
-                 raizSubarvore.esquerda = this.inserir(raizSubarvore.esquerda, valor);
-             }
-             else {
+            if(compara(valor,raizSubarvore.valor)) {
+                raizSubarvore.direita = this.inserir(raizSubarvore.direita, valor);
+            }
+            else if(compara(raizSubarvore.valor,valor)) {
+                raizSubarvore.esquerda = this.inserir(raizSubarvore.esquerda, valor);
+            }
+            else {
                 //
-             }
-         }
-         return raizSubarvore;
-     }
+            }
+        }
+        return raizSubarvore;
+    }
 
-     private boolean compara(Filme A, Filme B) {
-         if(A.getLancamento() > B.getLancamento()) {
-             return true; // A > B
-         } else if ( A.getLancamento() < B.getLancamento()) {
-             return false; // A < B
-         } else if ( A.getLancamento() == B.getLancamento()) {
-             if(A.getCategoria().compareTo(B.getCategoria()) > 0) {
-                 return true; // A > B
-             } else if ( A.getCategoria().compareTo(B.getCategoria()) < 0) {
-                 return false; // A < B
-             } else if ( A.getCategoria().compareTo(B.getCategoria()) == 0) {
-                 if(A.getTitulo().compareTo(B.getTitulo()) > 0) {
-                     return true; // A > B
-                 } else if ( A.getTitulo().compareTo(B.getTitulo()) < 0) {
-                     return false; // A < B
-                 } else if ( A.getTitulo().compareTo(B.getTitulo()) == 0) {
-                     return false;
-                 }
-             }
-         }
+    private boolean compara(Filme A, Filme B) {
+        if(A.getAno_lancamento() > B.getAno_lancamento()) {
+            return true; // A > B
+        } else if ( A.getAno_lancamento() < B.getAno_lancamento()) {
+            return false; // A < B
+        } else if ( A.getAno_lancamento() == B.getAno_lancamento()) {
+
+            if(A.getCategoria().compareTo(B.getCategoria()) > 0) {
+                return true; // A > B
+            } else if ( A.getCategoria().compareTo(B.getCategoria()) < 0) {
+                return false; // A < B
+            } else if ( A.getCategoria().compareTo(B.getCategoria()) == 0) {
+
+                if(A.getTitulo().compareTo(B.getTitulo()) > 0) {
+                    return true; // A > B
+                } else if ( A.getTitulo().compareTo(B.getTitulo()) < 0) {
+                    return false; // A < B
+                } else if ( A.getTitulo().compareTo(B.getTitulo()) == 0) {
+                    return false;
+                }
+            }
+        }
 
 
-         return true;
-     }
-
-     public void imprimirPreOrdem(Nodo raizSubarvore) {
-         if(raizSubarvore != null) {
-             System.out.println(raizSubarvore.valor.getTitulo());
-             imprimirPreOrdem(raizSubarvore.esquerda);
-             imprimirPreOrdem(raizSubarvore.direita);
-         }
-     }
+        return true;
+    }
 
 
 
+    public void buscar(Filme valor) {
+        this.buscar(this.raiz, valor);
+    }
 
-     public void buscar(String titulo) {
-         if (buscarNo(raiz, titulo)) {
-             System.out.println("Yes");
-         } else {
-             System.out.println("No");
-         }
-     }
+    public void buscar(Nodo raizSubarvore, Filme valor) {
 
-     private boolean buscarNo(Nodo raizSubarvore, String titulo) {
-         if (raizSubarvore == null) {
-             return false;
-         }
-         raizSubarvore.valor.imprimir();
-         if (raizSubarvore.valor.getTitulo().equals(titulo)) {
-             return true;
-         }
+        if(raizSubarvore == null) {
+            System.out.println("- NAO");
+        }
 
-         return buscarNo(raizSubarvore.esquerda, titulo) || buscarNo(raizSubarvore.direita, titulo);
-     }
+        else {
 
+            if(this.raiz.valor != raizSubarvore.valor) {
 
+            }
+            raizSubarvore.valor.imprimir();
 
+            if(compara(valor,raizSubarvore.valor)) {
+                this.buscar(raizSubarvore.direita, valor);
 
+            }
+            else if(compara(raizSubarvore.valor,valor)) {
+                this.buscar(raizSubarvore.esquerda, valor);
+            }
+            else {
 
- }
+                System.out.println("- SIM");
+            }
+        }
+    }
 
 
 
 
-    public class arvore {
+
+}
+
+
+
+
+public class arvore {
     public static void main(String[] args) {
         MyIO.setCharset("UTF-8");
         ArvoreBinaria ArvoreBinaria = new ArvoreBinaria();
         ArrayList<Filme> FilmeArquivos = new ArrayList<Filme>();
-        ArrayList<Filme> FilmeConsole = new ArrayList<>();
+        ArrayList<String> FilmeConsole = new ArrayList<String>();
 
 
         ArquivoTextoLeitura fileRead = null;
@@ -556,7 +617,7 @@ class PrintMovies {
             linha = fileRead.ler();
 
             while (linha != null) {
-                FilmeArquivos.add( new Filme(linha, true));
+                FilmeArquivos.add( new Filme(linha));
                 linha = fileRead.ler();
 
             }
@@ -569,20 +630,20 @@ class PrintMovies {
 
         // le console
         try {
-
             linha = MyIO.readLine();
-
             while (!linha.equals("FIM")) {
-                ArvoreBinaria.adicionar(new Filme(linha, false)); // Add the line to the binary tree
+                String[] tempString = linha.split(";");
+                String firstValue = tempString[0];
+                for(int ii = 0; ii < FilmeArquivos.size(); ii++) {
+                    if(  FilmeArquivos.get(ii).getTitulo().equals(firstValue)) {
+                        FilmeArquivos.get(ii).imprimir();
+                    }
+
+                }
+
+
                 linha = MyIO.readLine();
 
-            }
-
-            linha = MyIO.readLine(); // Read the next line after the first "FIM"
-
-            while (!linha.equals("FIM")) {
-                FilmeConsole.add(new Filme(linha, false)); // Add the line to the ArrayList
-                linha = MyIO.readLine();
             }
 
 
@@ -591,22 +652,10 @@ class PrintMovies {
             // TODO: handle exception
         }
 
+        for(int ii = 0; ii < FilmeConsole.size(); ii++) {
 
-        //ArvoreBinaria.raiz.valor.Imprimir();
-        //System.out.print(FilmeConsole.get(0).getTitulo());
+        }
 
-
-
-       // for(int k = 0 ; k < FilmeConsole.size(); k++) {
-        //    ArvoreBinaria.buscar(FilmeConsole.get(k).getTitulo());
-        //}
-
-       //for(int k = 0; k < FilmeConsole.size(); k++) {
-          // System.out.println(ArvoreBinaria.buscar(FilmeConsole.get(k).getTitulo()));
-
-      // }
-
-        ArvoreBinaria.buscar("22 July");
 
 
     }
