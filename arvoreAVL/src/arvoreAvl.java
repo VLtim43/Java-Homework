@@ -332,7 +332,7 @@ class Path {
         if (os.contains("Windows"))
             return "file\\filmes.txt";
         else
-           return "/tmp/filmes.txt";
+          return "/tmp/filmes.txt";
            //return "/home/user/Documents/Programs/Java-Homework/arvore/files/filmes.txt";
     }
 }
@@ -471,165 +471,359 @@ class Filme {
 
 }
 
+
+class PrintMovies {
+    public static void Print(ArrayList<Filme> filmesArray) {
+        for(int i = 0; i < filmesArray.size(); i++) {
+            filmesArray.get(i).imprimir();
+        }
+    }
+
+}
+
+
 ///////////////////////////////////////////////////////////////////
+
 
 
 class Nodo {
     public Filme valor;
     public Nodo esquerda;
     public Nodo direita;
+    public int altura;
 
     public Nodo() {
         this.valor = null;
         this.esquerda = null;
         this.direita = null;
+        this.altura = 0;
     }
 
     public Nodo(Filme valor) {
         this.valor = valor;
         this.esquerda = null;
         this.direita = null;
+        this.altura = 0;
+    }
+}
+ class Inteiro {
+     public void setValor(Filme valor) {
+         this.valor = valor;
+     }
+
+     private Filme valor;
+
+     public Filme getValor() {
+         return valor;
+     }
+
+     public Inteiro() {
+        this.valor = null;
+    }
+
+    public Inteiro(Filme i) {
+        this.valor = i;
+    }
+
+
+
+    public void imprimir() {
+       this.valor.imprimir();
     }
 }
 
+ class No {
+    private Inteiro item;
+    private int altura;
+    private No esquerda;
+    private No direita;
 
-class ArvoreBinaria {
-    public Nodo raiz;
-    public ArvoreBinaria() {
-        this.raiz = null;
+    public No() {
+        this.item = new Inteiro();
+        this.altura = 0;
+        this.esquerda = null;
+        this.direita = null;
     }
 
-    public ArvoreBinaria(Nodo no) {
-        this.raiz = no;
+    public No(Inteiro registro) {
+        this.item = registro;
+        this.altura = 0;
+        this.esquerda = null;
+        this.direita = null;
     }
 
-    public boolean vazia() {
-        return (this.raiz == null);
+    public Inteiro getItem() {
+        return this.item;
     }
 
+    public void setItem(Inteiro item) {
+        this.item = item;
+    }
 
-    public void adicionar(Filme valor) {
-        if(this.raiz == null)
-            this.raiz = new Nodo(valor);
+    public No getEsquerda() {
+        return this.esquerda;
+    }
+
+    public void setEsquerda(No esquerda) {
+        this.esquerda = esquerda;
+    }
+
+    public No getDireita() {
+        return this.direita;
+    }
+
+    public void setDireita(No direita) {
+        this.direita = direita;
+    }
+
+    public int getAltura() {
+        return this.altura;
+    }
+
+    public void setAltura() {
+        int alturaEsq, alturaDir;
+
+        if (this.direita == null)
+            alturaDir = -1;
         else
-            this.inserir(this.raiz, valor);
+            alturaDir = this.direita.getAltura();
+
+        if (this.esquerda == null)
+            alturaEsq = -1;
+        else
+            alturaEsq = this.esquerda.getAltura();
+
+        if (alturaEsq > alturaDir)
+            this.altura = alturaEsq + 1;
+        else
+            this.altura = alturaDir + 1;
     }
 
-    private Nodo inserir(Nodo raizSubarvore, Filme valor) {
-        if(raizSubarvore == null) {
-            raizSubarvore = new Nodo(valor);
+    public int getFatorBalanceamento() {
+        int alturaEsq, alturaDir;
+
+        if (this.direita == null)
+            alturaDir = -1;
+        else
+            alturaDir = this.direita.getAltura();
+
+        if (this.esquerda == null)
+            alturaEsq = -1;
+        else
+            alturaEsq = this.esquerda.getAltura();
+
+        return (alturaEsq - alturaDir);
+    }
+}
+ class AVL {
+     public No getRaiz() {
+         return raiz;
+     }
+
+     private No raiz;
+
+    public AVL() {
+        raiz = null;
+    }
+
+
+
+     private boolean compara(Filme A, Filme B) {
+         if(A.getAno_lancamento() > B.getAno_lancamento()) {
+             return true; // A > B
+         } else if ( A.getAno_lancamento() < B.getAno_lancamento()) {
+             return false; // A < B
+         } else if ( A.getAno_lancamento() == B.getAno_lancamento()) {
+
+             if(A.getCategoria().compareTo(B.getCategoria()) > 0) {
+                 return true; // A > B
+             } else if ( A.getCategoria().compareTo(B.getCategoria()) < 0) {
+                 return false; // A < B
+             } else if ( A.getCategoria().compareTo(B.getCategoria()) == 0) {
+
+                 if(A.getTitulo().compareTo(B.getTitulo()) > 0) {
+                     return true; // A > B
+                 } else if ( A.getTitulo().compareTo(B.getTitulo()) < 0) {
+                     return false; // A < B
+                 } else if ( A.getTitulo().compareTo(B.getTitulo()) == 0) {
+                     return false;
+                 }
+             }
+         }
+
+
+         return true;
+     }
+
+
+
+     public void buscar(Inteiro novo) throws Exception {
+         this.raiz = buscar(this.raiz, novo);
+
+     }
+     private No buscar(No raizSubarvore, Inteiro novo) throws Exception{
+         if (raizSubarvore == null) {
+             raizSubarvore = new No(novo);
+             System.out.println(" - NAO");
+         }
+         else if (compara(raizSubarvore.getItem().getValor(), novo.getValor())) {
+
+             if(raizSubarvore.getItem() != raiz.getItem()) {
+                 System.out.print(" - ");
+                 raizSubarvore.getItem().getValor().imprimir();
+
+             }
+
+             raizSubarvore.setEsquerda(buscar(raizSubarvore.getEsquerda(), novo));
+         }
+         else if (compara(novo.getValor(), raizSubarvore.getItem().getValor())) {
+             if(raizSubarvore.getItem() != raiz.getItem()) {
+                 System.out.print(" - ");
+                 raizSubarvore.getItem().getValor().imprimir();
+             }
+
+             raizSubarvore.setDireita(buscar(raizSubarvore.getDireita(), novo));
+         }
+         else {
+             System.out.println(" - SIM");
+
+         }
+
+         return balancear(raizSubarvore);
+
+     }
+
+    public void inserir(Inteiro novo) throws Exception {
+        this.raiz = inserir(this.raiz, novo);
+    }
+    private No inserir(No raizSubarvore, Inteiro novo) throws Exception{
+        if (raizSubarvore == null) {
+            raizSubarvore = new No(novo);
+
+        }
+        else if (novo.getValor() == raizSubarvore.getItem().getValor()) {
+            throw new Exception("Não foi possível inserir o item na árvore: chave já inseriada anteriormente!");
+        }
+        else if (compara(raizSubarvore.getItem().getValor(), novo.getValor())) {
+            raizSubarvore.setEsquerda(inserir(raizSubarvore.getEsquerda(), novo));
         }
         else {
-
-            if(checkIfAGreaterThanB(valor,raizSubarvore.valor)) {
-                raizSubarvore.direita = this.inserir(raizSubarvore.direita, valor);
-            }
-            else if(checkIfBGreaterThanA(valor,raizSubarvore.valor)) {
-                raizSubarvore.esquerda = this.inserir(raizSubarvore.esquerda, valor);
-            }
-            //
-
+            raizSubarvore.setDireita(inserir(raizSubarvore.getDireita(), novo));
         }
+
+        return balancear(raizSubarvore);
+    }
+
+    private No balancear(No raizSubarvore) {
+        int fatorBalanceamento;
+        int fatorBalanceamentoFilho;
+
+        fatorBalanceamento = raizSubarvore.getFatorBalanceamento();
+
+        if (fatorBalanceamento == 2) {
+            // árvore desbalanceada para a esquerda.
+            fatorBalanceamentoFilho = raizSubarvore.getEsquerda().getFatorBalanceamento();
+            if (fatorBalanceamentoFilho == -1) {
+                // rotação dupla.
+                // rotação do filho à esquerda.
+                raizSubarvore.setEsquerda(rotacionarEsquerda(raizSubarvore.getEsquerda()));
+            }
+            // rotação à direita.
+            raizSubarvore = rotacionarDireita(raizSubarvore);
+        }
+        else if (fatorBalanceamento == -2) {
+            // árvore desbalanceada para a direita.
+            fatorBalanceamentoFilho = raizSubarvore.getDireita().getFatorBalanceamento();
+            if (fatorBalanceamentoFilho == 1) {
+                // rotação dupla.
+                // rotação do filho à direita.
+                raizSubarvore.setDireita(rotacionarDireita(raizSubarvore.getDireita()));
+            }
+            // rotação à esquerda.
+            raizSubarvore = rotacionarEsquerda(raizSubarvore);
+        }
+        else {
+            raizSubarvore.setAltura();
+        }
+
         return raizSubarvore;
     }
 
-    private boolean checkIfAGreaterThanB(Filme A, Filme B) {
-        if (A.getAno_lancamento() > B.getAno_lancamento()) {
-            return true; // A > B
-        } else if (A.getAno_lancamento() < B.getAno_lancamento()) {
-            return false; // A < B
-        } else if (A.getAno_lancamento() == B.getAno_lancamento()) {
-            if (A.getCategoria().compareTo(B.getCategoria()) > 0) {
-                return true; // A > B
-            } else if (A.getCategoria().compareTo(B.getCategoria()) < 0) {
-                return false; // A < B
-            } else if (A.getCategoria().compareTo(B.getCategoria()) == 0) {
-                if (A.getTitulo().compareTo(B.getTitulo()) > 0) {
-                    return true; // A > B
-                } else if (A.getTitulo().compareTo(B.getTitulo()) < 0) {
-                    return false; // A < B
-                }
-            }
+    private No rotacionarDireita(No p) {
+        No u = p.getEsquerda();
+        No filhoEsquerdaDireita = u.getDireita();  // triângulo vermelho
+
+        u.setDireita(p);
+        p.setEsquerda(filhoEsquerdaDireita);
+
+        p.setAltura();
+        u.setAltura();
+
+        return u;
+    }
+
+    private No rotacionarEsquerda(No p) {
+        No z = p.getDireita();
+        No filhoDireitaEsquerda = z.getEsquerda();  // triângulo vermelho
+
+        z.setEsquerda(p);
+        p.setDireita(filhoDireitaEsquerda);
+
+        p.setAltura();
+        z.setAltura();
+
+        return z;
+    }
+
+
+    public void remover(Filme chaveRemover) throws Exception {
+        this.raiz = remover(this.raiz, chaveRemover);
+    }
+
+    private No remover(No raizSubarvore, Filme chaveRemover) throws Exception {
+        if (raizSubarvore == null) {
+            throw new Exception("Não foi possível remover o item da árvore: chave não encontrada!");
         }
-        return false; // A == B
-    }
-
-
-    private boolean checkIfBGreaterThanA(Filme A, Filme B) {
-        if (B.getAno_lancamento() > A.getAno_lancamento()) {
-            return true; // B > A
-        } else if (B.getAno_lancamento() < A.getAno_lancamento()) {
-            return false; // B < A
-        } else if (B.getAno_lancamento() == A.getAno_lancamento()) {
-            if (B.getCategoria().compareTo(A.getCategoria()) > 0) {
-                return true; // B > A
-            } else if (B.getCategoria().compareTo(A.getCategoria()) < 0) {
-                return false; // B < A
-            } else if (B.getCategoria().compareTo(A.getCategoria()) == 0) {
-                if (B.getTitulo().compareTo(A.getTitulo()) > 0) {
-                    return true; // B > A
-                } else if (B.getTitulo().compareTo(A.getTitulo()) < 0) {
-                    return false; // B < A
-                }
+        else if (chaveRemover == raizSubarvore.getItem().getValor()) {
+            if (raizSubarvore.getEsquerda() == null) {
+                raizSubarvore = raizSubarvore.getDireita();
             }
-        }
-        return false; // A == B
-    }
-
-
-
-    public Nodo getRaiz () {
-        return raiz;
-    }
-
-    public void buscar(Filme valor) {
-        this.buscar(this.raiz, valor);
-    }
-
-    public void buscar(Nodo raizSubarvore, Filme valor) {
-
-        if(raizSubarvore == null) {
-            System.out.println(" - NAO");
-        } else {
-
-            if(checkIfAGreaterThanB(valor,raizSubarvore.valor)) {
-               if(raizSubarvore != raiz) {
-                   System.out.print(" - ");
-                   raizSubarvore.valor.imprimir();
-               }
-
-
-
-                this.buscar(raizSubarvore.direita, valor);
-
-            }
-            else if(checkIfBGreaterThanA(valor,raizSubarvore.valor)) {
-                if(raizSubarvore != raiz) {
-                    System.out.print(" - ");
-                    raizSubarvore.valor.imprimir();
-                }
-
-                this.buscar(raizSubarvore.esquerda, valor);
-
-
+            else if (raizSubarvore.getDireita() == null) {
+                raizSubarvore = raizSubarvore.getEsquerda();
             }
             else {
-                System.out.print(" - ");
-                raizSubarvore.valor.imprimir();
-                System.out.println(" - SIM");
+                raizSubarvore.setEsquerda(antecessor(raizSubarvore, raizSubarvore.getEsquerda()));
             }
         }
+        else if (compara(chaveRemover , raizSubarvore.getItem().getValor())) {
+            raizSubarvore.setDireita(remover(raizSubarvore.getDireita(), chaveRemover));
+        }
+        else {
+            raizSubarvore.setEsquerda(remover(raizSubarvore.getEsquerda(), chaveRemover));
+        }
+        return balancear(raizSubarvore);
     }
+
+    private No antecessor(No noRetirar, No raizSubarvore) {
+        if (raizSubarvore.getDireita() != null) {
+            raizSubarvore.setDireita(antecessor(noRetirar, raizSubarvore.getDireita()));
+        }
+        else {
+            noRetirar.setItem(raizSubarvore.getItem());
+            raizSubarvore = raizSubarvore.getEsquerda();
+        }
+        return balancear(raizSubarvore);
+    }
+
 }
 
 
-///////////////////////////////////////////////////////////////////
 
 
-public class arvore {
-    public static void main(String[] args) {
+public class arvoreAvl {
+    public static void main(String[] args) throws Exception {
         MyIO.setCharset("UTF-8");
-        ArvoreBinaria ArvoreBinaria = new ArvoreBinaria();
+        AVL ArvoreAVL = new AVL ();
         ArrayList<Filme> FilmeArquivos = new ArrayList<Filme>();
         ArrayList<Filme> FilmeConsole = new ArrayList<Filme>();
         ArrayList<Filme> FilmePesquisa = new ArrayList<Filme>();
@@ -653,7 +847,6 @@ public class arvore {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {
-            assert fileRead != null;
             fileRead.fecharArquivo();
         }
 
@@ -695,14 +888,19 @@ public class arvore {
             // TODO: handle exception
         }
 
-        for (Filme filme : FilmeConsole) {
-            ArvoreBinaria.adicionar(filme);
+
+
+        for(int a = 0 ; a < FilmeConsole.size();a++) {
+            ArvoreAVL.inserir(new Inteiro(FilmeConsole.get(a)));
         }
 
-        for (Filme filme : FilmePesquisa) {
-            ArvoreBinaria.raiz.valor.imprimir();
-            ArvoreBinaria.buscar(filme);
+
+        for(int a = 0 ; a < FilmePesquisa.size();a++) {
+            ArvoreAVL.getRaiz().getItem().getValor().imprimir();
+            ArvoreAVL.buscar(new Inteiro(FilmePesquisa.get(a)));
         }
+
+       // ArvoreAVL.raiz.getEsquerda().getItem().getValor().imprimir();
 
 
     }
