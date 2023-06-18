@@ -1,100 +1,90 @@
-
- class IntegerHashTable {
+ class LinearHashTable {
      private int[][] table;
-     private int capacity;
-     private int size;
+     private int currentCapacity;
+     private int maxCapacity;
 
-     public IntegerHashTable(int capacity) {
-         this.capacity = capacity;
-         this.table = new int[capacity][2]; // 2 buckets
-         this.size = 0;
+     public LinearHashTable(int maxCapacity) {
+         table = new int[maxCapacity][2];
+         this.maxCapacity = maxCapacity;
+         currentCapacity = 0;
+     }
+
+     public int getMaxCapacity() {
+         return maxCapacity;
+     }
+
+     public int getCurrentCapacity() {
+         return currentCapacity;
      }
 
      public void insert(int key) {
-         if (size == capacity * 2) {
-             System.out.println("Tabela cheia. Não se pode inserir: " + key);
+         if (currentCapacity >= maxCapacity) {
+             System.out.println("Tabela cheia, não se pode inserir nenhum elemento: " + key);
              return;
          }
 
-         int index = hash(key);
-         for (int i = 0; i < 2; i++) {
-             int slotIndex = (index + i) % capacity;
-             if (table[slotIndex][0] == 0) {
-                 table[slotIndex][0] = key;
-                 size++;
-                 return;
-             }
+         int hash = key % maxCapacity;
+         int collisionCount = 0;
+
+         while (table[hash][0] != 0 && collisionCount < 2) {
+             hash = (hash + 1) % maxCapacity;
+             collisionCount++;
          }
 
-         System.out.println("Tabela cheia. Não se pode inserir: " + key);
-
-     }
-
-     public boolean search(int key) {
-         int index = hash(key);
-         for (int i = 0; i < 2; i++) {
-             int slotIndex = (index + i) % capacity;
-             if (table[slotIndex][0] == key) {
-                 return true;
-             }
+         if (collisionCount >= 2) {
+             System.out.println("Não se pode inserir o elemento: " + key + ". Buckets cheios para essa posição.");
+             return;
          }
-         return false;
+
+         table[hash][0] = key;
+         table[hash][1] = 1;
+         currentCapacity++;
      }
 
-     public void delete(int key) {
-         int index = hash(key);
-         for (int i = 0; i < 2; i++) {
-             int slotIndex = (index + i) % capacity;
-             if (table[slotIndex][0] == key) {
-                 table[slotIndex][0] = 0;
-                 size--;
-                 return;
-             }
+     public void remove(int key) {
+         int hash = key % maxCapacity;
+
+         while (table[hash][0] != key && table[hash][1] != 0) {
+             hash = (hash + 1) % maxCapacity;
          }
-         System.out.println("Valor não encontrado: " + key);
+
+         if (table[hash][0] == key) {
+             table[hash][0] = 0;
+             table[hash][1] = 0;
+             currentCapacity--;
+             System.out.println("Elemento removido: " + key);
+         } else {
+             System.out.println("Element não encontrado: " + key);
+         }
      }
 
-     private int hash(int key) {
-         return key % capacity;
-     }
-
-     public int getSize() {
-         return size;
-     }
-
-     public int getCapacity() {
-         return capacity;
-     }
-
- }
 
 
 
 
-
-public class LinearHash {
     public static void main(String[] args) {
-        IntegerHashTable hashTable = new IntegerHashTable(11);
+        LinearHashTable hashTable = new LinearHashTable(11);
+        System.out.println("Capacidade max: " + hashTable.getMaxCapacity());
+        System.out.println("Capacidade atual: " + hashTable.getCurrentCapacity());
 
         hashTable.insert(37);
+
         hashTable.insert(14);
         hashTable.insert(25);
         hashTable.insert(13);
-        hashTable.insert( 7);
+        hashTable.insert(7);
         hashTable.insert(2);
         hashTable.insert(4);
         hashTable.insert(15);
         hashTable.insert(16);
-        hashTable.delete(4);
+
+        hashTable.remove(4);
+
         hashTable.insert(10);
         hashTable.insert(21);
         hashTable.insert(36);
+
         hashTable.insert(41);
-
-
-        System.out.println(hashTable.getCapacity()); // Output: 4
-
-
 
 
     }
