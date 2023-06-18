@@ -1,81 +1,72 @@
 
-
-
-
  class IntegerHashTable {
-    private int[] table;
-    private int capacity;
-    private int size;
+     private int[][] table;
+     private int capacity;
+     private int size;
 
-    public IntegerHashTable(int capacity) {
-        this.capacity = capacity;
-        this.table = new int[capacity];
-        this.size = 0;
-    }
+     public IntegerHashTable(int capacity) {
+         this.capacity = capacity;
+         this.table = new int[capacity][2]; // 2 buckets
+         this.size = 0;
+     }
 
-    public void insert(int key) {
-        if (size == capacity) {
-            System.out.println("Tabela cheia, não se pode inserir o valor: " + key);
-            return;
-        }
+     public void insert(int key) {
+         if (size == capacity * 2) {
+             System.out.println("Tabela cheia. Não se pode inserir: " + key);
+             return;
+         }
 
-        int index = hash(key);
-        while (table[index] != 0) {
-            index = (index + 1) % capacity; // Linear probing
-        }
+         int index = hash(key);
+         for (int i = 0; i < 2; i++) {
+             int slotIndex = (index + i) % capacity;
+             if (table[slotIndex][0] == 0) {
+                 table[slotIndex][0] = key;
+                 size++;
+                 return;
+             }
+         }
 
-        table[index] = key;
-        size++;
-    }
+         System.out.println("Tabela cheia. Não se pode inserir: " + key);
 
-    public boolean search(int key) {
-        int index = hash(key);
-        int count = 0;
+     }
 
-        while (table[index] != 0 && count < capacity) {
-            if (table[index] == key) {
-                return true;
-            }
+     public boolean search(int key) {
+         int index = hash(key);
+         for (int i = 0; i < 2; i++) {
+             int slotIndex = (index + i) % capacity;
+             if (table[slotIndex][0] == key) {
+                 return true;
+             }
+         }
+         return false;
+     }
 
-            index = (index + 1) % capacity; // Linear probing
-            count++;
-        }
+     public void delete(int key) {
+         int index = hash(key);
+         for (int i = 0; i < 2; i++) {
+             int slotIndex = (index + i) % capacity;
+             if (table[slotIndex][0] == key) {
+                 table[slotIndex][0] = 0;
+                 size--;
+                 return;
+             }
+         }
+         System.out.println("Valor não encontrado: " + key);
+     }
 
-        return false;
-    }
+     private int hash(int key) {
+         return key % capacity;
+     }
 
-    public void delete(int key) {
-        int index = hash(key);
-        int count = 0;
+     public int getSize() {
+         return size;
+     }
 
-        while (table[index] != 0 && count < capacity) {
-            if (table[index] == key) {
-                table[index] = 0;
-                size--;
-                return;
-            }
+     public int getCapacity() {
+         return capacity;
+     }
 
-            index = (index + 1) % capacity; // Linear probing
-            count++;
-        }
-
-        System.out.println("Valor não encontrado: " + key);
-    }
-
-
-
-    private int hash(int key) {
-        return key % capacity;
-    }
-
-    public int getSize() {
-        return size;
-    }
-
-    public int getCapacity() {
-        return capacity;
-    }
-}
+ }
 
 
 
