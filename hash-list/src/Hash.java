@@ -8,7 +8,6 @@ import java.io.UnsupportedEncodingException;
 import java.io.*;
 import java.nio.charset.*;
 import java.util.ArrayList;
-import java.util.concurrent.Phaser;
 
 class ArquivoTextoLeitura {
     private BufferedReader entrada;
@@ -381,12 +380,12 @@ class Filme {
         this.ator2 = ator2;
     }
 
-    public String getDuracao() {
+    public int getDuracao() {
         return duracao;
     }
 
     public void setDuracao(String duracao) {
-        this.duracao = duracao;
+        this.duracao = Integer.parseInt(duracao);
     }
 
     public String getCategoria() {
@@ -417,7 +416,7 @@ class Filme {
     private String diretor;
     private String ator1;
     private String ator2;
-    private String duracao;
+    private int duracao;
     private String categoria;
     private String pais_origem;
     private int ano_lancamento;
@@ -433,7 +432,7 @@ class Filme {
             this.ator1 = Valores[3];
             this.ator2 = Valores[4];
             this.ano_lancamento =  Integer.parseInt(Valores[5]);
-            this.duracao = Valores[6];
+            this.duracao = Integer.parseInt(Valores[6]);
             this.categoria = Valores[7];
             this.pais_origem = Valores[8];
         } else {
@@ -444,7 +443,7 @@ class Filme {
             this.ator1 = "null";
             this.ator2 = "null";
             this.ano_lancamento =  Integer.parseInt(Valores[1]);
-            this.duracao = Valores[2];
+            this.duracao = Integer.parseInt(Valores[2]);
             this.categoria = "null";
             this.pais_origem = "null";
         }
@@ -475,7 +474,7 @@ class Filme {
 ///////////////////////////////////////////////////////////////////
 
  class HashTable {
-    private ArrayList<Integer>[] array;
+     public ArrayList<Filme>[] array;
     private int size;
     public HashTable(int size) {
         array = new ArrayList[size];
@@ -494,19 +493,31 @@ class Filme {
          return array[0].size();
      };
 
-    public void insert(int a, int b) {
-        int index = hash(a, b);
-        if(array[index].get(0) == null ) {
 
+
+    public void insert(Filme filme) {
+        int index = hash(filme.getAno_lancamento(), filme.getDuracao());
+        if(index > size) {
+            System.out.println("Error - Can't insert ");
+        } else {
+            array[index].add(filme);
         }
-    }
+
+     }
 
 
-    public void contains(int a, int b) {
-        int index = hash(a, b);
-        System.out.println(array[index].get(0));
-    }
 
+     public void contains(Filme filme) {
+        int index = hash(filme.getAno_lancamento(), filme.getDuracao());
+
+         try {
+            System.out.println(array[index].get(0));
+         }
+         catch(Exception e) {
+             System.out.println(false);
+         }
+
+     }
 
 
     private int hash(int a, int b) {
@@ -589,8 +600,8 @@ public class Hash {
        // }
 
         HashTable HashTable = new HashTable(331);
-        System.out.println(HashTable.showRows());
-        System.out.println(HashTable.showColumns());
+        HashTable.insert(FilmePesquisa.get(1));
+        HashTable.contains(FilmePesquisa.get(0));
 
 
 
