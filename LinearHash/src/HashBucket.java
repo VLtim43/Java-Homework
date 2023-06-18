@@ -1,9 +1,9 @@
- class LinearHashTable {
+ class HashBucket {
      private int[][] table;
      private int currentCapacity;
      private int maxCapacity;
 
-     public LinearHashTable(int maxCapacity) {
+     public HashBucket(int maxCapacity) {
          table = new int[maxCapacity][2];
          this.maxCapacity = maxCapacity;
          currentCapacity = 0;
@@ -63,28 +63,28 @@
 
 
     public static void main(String[] args) {
-        LinearHashTable hashTable = new LinearHashTable(11);
-        System.out.println("Capacidade max: " + hashTable.getMaxCapacity());
-        System.out.println("Capacidade atual: " + hashTable.getCurrentCapacity());
+        HashBucket hashBucket = new HashBucket(11);
+        System.out.println("Capacidade max: " + hashBucket.getMaxCapacity());
+        System.out.println("Capacidade atual: " + hashBucket.getCurrentCapacity());
 
-        hashTable.insert(37);
+        hashBucket.insert(37);
 
-        hashTable.insert(14);
-        hashTable.insert(25);
-        hashTable.insert(13);
-        hashTable.insert(7);
-        hashTable.insert(2);
-        hashTable.insert(4);
-        hashTable.insert(15);
-        hashTable.insert(16);
+        hashBucket.insert(14);
+        hashBucket.insert(25);
+        hashBucket.insert(13);
+        hashBucket.insert(7);
+        hashBucket.insert(2);
+        hashBucket.insert(4);
+        hashBucket.insert(15);
+        hashBucket.insert(16);
 
-        hashTable.remove(4);
+        hashBucket.remove(4);
 
-        hashTable.insert(10);
-        hashTable.insert(21);
-        hashTable.insert(36);
+        hashBucket.insert(10);
+        hashBucket.insert(21);
+        hashBucket.insert(36);
 
-        hashTable.insert(41);
+        hashBucket.insert(41);
 
 
     }
