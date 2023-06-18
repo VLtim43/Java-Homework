@@ -8,6 +8,7 @@ import java.io.UnsupportedEncodingException;
 import java.io.*;
 import java.nio.charset.*;
 import java.util.ArrayList;
+import java.util.concurrent.Phaser;
 
 class ArquivoTextoLeitura {
     private BufferedReader entrada;
@@ -473,7 +474,45 @@ class Filme {
 
 ///////////////////////////////////////////////////////////////////
 
+ class HashTable {
+    private ArrayList<Integer>[] array;
+    private int size;
+    public HashTable(int size) {
+        array = new ArrayList[size];
+        this.size = size;
+        for (int i = 0; i < array.length; i++) {
+            array[i] = new ArrayList<>();
+        }
+    }
 
+
+    public int showRows() {
+      return array.length;
+    };
+
+     public int showColumns() {
+         return array[0].size();
+     };
+
+    public void insert(int a, int b) {
+        int index = hash(a, b);
+        if(array[index].get(0) == null ) {
+
+        }
+    }
+
+
+    public void contains(int a, int b) {
+        int index = hash(a, b);
+        System.out.println(array[index].get(0));
+    }
+
+
+
+    private int hash(int a, int b) {
+        return (a * b) % array.length;
+    }
+}
 
 ///////////////////////////////////////////////////////////////////
 
@@ -545,9 +584,16 @@ public class Hash {
         }
 
 
-        for(int i = 0; i < FilmePesquisa.size() ; i++) {
-            FilmePesquisa.get(i).imprimir();
-        }
+      //  for(int i = 0; i < FilmePesquisa.size() ; i++) {
+       //     FilmePesquisa.get(i).imprimir();
+       // }
+
+        HashTable HashTable = new HashTable(331);
+        System.out.println(HashTable.showRows());
+        System.out.println(HashTable.showColumns());
+
+
+
 
 
 
