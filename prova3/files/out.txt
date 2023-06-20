@@ -1,0 +1,59 @@
+Gato domestico (Felis silvestris catus)
+ - Gato-leopardo-asiatico (Felis prionailurus bengalensis)
+ - SIM
+Gato domestico (Felis silvestris catus)
+ - Jaguatirica (Leopardus pardalis)
+ - Leao (Panthera leo)
+ - Leopardo (Panthera Pardus)
+ - NAO
+Gato domestico (Felis silvestris catus)
+ - Jaguatirica (Leopardus pardalis)
+ - Leao (Panthera leo)
+ - Onca-pintada (Panthera onca)
+ - SIM
+Gato domestico (Felis silvestris catus)
+ - Jaguatirica (Leopardus pardalis)
+ - Leao (Panthera leo)
+ - Leopardo (Panthera Pardus)
+ - Lince-iberico (Lynx pardinus)
+ - SIM
+Gato domestico (Felis silvestris catus)
+ - Jaguatirica (Leopardus pardalis)
+ - Leao (Panthera leo)
+ - Onca-pintada (Panthera onca)
+ - Puma (Puma concolor)
+ - NAO
+-----
+[EM ORDEM]
+ - Gato-leopardo-asiatico (Felis prionailurus bengalensis)
+ - Gato domestico (Felis silvestris catus)
+ - Jaguatirica (Leopardus pardalis)
+ - Lince-iberico (Lynx pardinus)
+ - Leopardo (Panthera Pardus)
+ - Leao (Panthera leo)
+ - Onca-pintada (Panthera onca)
+ - Tigre (Panthera tigris)
+ - Puma (Puma concolor)
+-----
+[PRÉ ORDEM]
+ - Gato domestico (Felis silvestris catus)
+ - Gato-leopardo-asiatico (Felis prionailurus bengalensis)
+ - Jaguatirica (Leopardus pardalis)
+ - Leao (Panthera leo)
+ - Leopardo (Panthera Pardus)
+ - Lince-iberico (Lynx pardinus)
+ - Onca-pintada (Panthera onca)
+ - Puma (Puma concolor)
+ - Tigre (Panthera tigris)
+-----
+[PÓS ORDEM]
+ - Gato-leopardo-asiatico (Felis prionailurus bengalensis)
+ - Lince-iberico (Lynx pardinus)
+ - Leopardo (Panthera Pardus)
+ - Tigre (Panthera tigris)
+ - Puma (Puma concolor)
+ - Onca-pintada (Panthera onca)
+ - Leao (Panthera leo)
+ - Jaguatirica (Leopardus pardalis)
+ - Gato domestico (Felis silvestris catus)
+-----
