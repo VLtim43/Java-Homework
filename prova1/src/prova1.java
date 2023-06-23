@@ -4,7 +4,6 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.io.*;
 import java.nio.charset.*;
-import java.util.ArrayList;
 
 class MyIO {
 
@@ -350,45 +349,62 @@ class Animal {
     public String toString() {
         return this.getNome() + " (" + this.nomeCientifico + "), animal "
                 + (this.isDomestico() ? "domestico" : "selvagem") + " com idade maxima de " + this.getIdadeMaxima()
-                + " anos " + "e peso estimado de " + this.getPeso() + " quilos.";
-    }
-
-    public void imprimir() {
-        System.out.println(this.toString());
+                + " anos.";
     }
 }
 
 ///////////////////////////////////////////////////////////////////
 
 
+
 public class prova1 {
     public static void main(String[] args) {
-        ArrayList<Animal> AnimalConsole = new ArrayList<Animal>();
-        ArrayList<Animal> AnimalPesquisa = new ArrayList<Animal>();
+        // vetor de animais
+        Animal[] animais = new Animal[50];
 
         String linha = MyIO.readLine();
+        int quantidade = 0; // quantidade efetiva de animais no vetor
 
-        //preenchimento dos vetores
-        try {
-            while(!linha.equals("FIM")) {
-                String[] valores = linha.split(";");
-                AnimalConsole.add(new Animal(valores[0], valores[1], Boolean.parseBoolean(valores[2]),
-                        Integer.parseInt(valores[3]), Integer.parseInt(valores[4])));
+        // preenchimento do vetor
+        while (!linha.equals("FIM")) {
+            String[] valores = linha.split(";");
 
-                linha = MyIO.readLine();
+            animais[quantidade++] = new Animal(valores[0], valores[1], Boolean.parseBoolean(valores[2]),
+                    Integer.parseInt(valores[3]), Integer.parseInt(valores[4]));
+
+            linha = MyIO.readLine();
+        }
+
+        linha = MyIO.readLine();
+
+        // pesquisa no vetor
+        while (!linha.equals("FIM")) {
+            String[] pesos = linha.split(";");
+            int peso_min, peso_max;
+
+            try {
+                peso_min = Integer.parseInt(pesos[0]);
+                peso_max = Integer.parseInt(pesos[1]);
+
+                for (int i = 0; i < quantidade; i++) {
+                    if (animais[i].getPeso() >= peso_min && animais[i].getPeso() <= peso_max) {
+                        System.out.println(animais[i]);
+                    }
+                }
+            } catch (Exception ex) {
+                System.out.println("Informacao de peso do animal incorreta.");
             }
 
-        } catch (Exception e) {
-            System.out.print(e);
+            linha = MyIO.readLine();
         }
 
 
-        for( Animal x : AnimalConsole) {
-            x.imprimir();
-        }
 
+
+
+        }
 
 
     }
 
-}
+
