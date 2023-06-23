@@ -363,8 +363,9 @@ class Animal {
         this.peso = peso;
     }
 
-    public String toString() {
-        return this.getNome() + " (" + this.nomeCientifico + ")";
+    public void imprimir() {
+        MyIO.println(this.getNome() + " (" + this.nomeCientifico + ")");
+
     }
 
 
@@ -442,82 +443,34 @@ class Arvore {
 
     }
 
-    public  boolean eMenor(Animal animalA, Animal animalB) {
+    public boolean eMenor(Animal animalA, Animal animalB) {
         return (animalA.nomeCientifico.compareTo(animalB.nomeCientifico) < 0);
     }
 
 
     //inserir
-
-    public void adicionar(Animal valor) {
-        if(this.raiz == null)
-            this.raiz = new Nodo(valor);
-        else
-            this.inserir(this.raiz, valor);
+    public void inserir(Animal novo) {
+        this.raiz = inserir(this.raiz, novo);
     }
 
-    private Nodo inserir(Nodo raizSubarvore, Animal valor) {
-        if(raizSubarvore == null) {
-            raizSubarvore = new Nodo(valor);
-        }
-        else {
-
-            if(eMaior(valor,raizSubarvore.valor)) {
-                raizSubarvore.direita = this.inserir(raizSubarvore.direita, valor);
+    private Nodo inserir(Nodo raizSubarvore, Animal novo) {
+        if (raizSubarvore == null) {
+            raizSubarvore = new Nodo(novo);
+        } else {
+            if (eMaior(raizSubarvore.getValor(), novo)) {
+                raizSubarvore.setEsquerda(inserir(raizSubarvore.getEsquerda(), novo));
+            } else if (eMenor(raizSubarvore.getValor(), novo)) {
+                raizSubarvore.setDireita(inserir(raizSubarvore.getDireita(), novo));
             }
-            else if(eMenor(valor,raizSubarvore.valor)) {
-                raizSubarvore.esquerda = this.inserir(raizSubarvore.esquerda, valor);
-            }
-            //
 
         }
+
         return raizSubarvore;
     }
 
 
-    public void buscar(Animal valor) {
-        this.buscar(this.raiz, valor);
-    }
 
-    public void buscar(Nodo raizSubarvore, Animal valor) {
-
-        if(raizSubarvore == null) {
-            System.out.println(" - NAO");
-        } else {
-
-            if(eMaior(valor,raizSubarvore.valor)) {
-                if(raizSubarvore != raiz) {
-                    System.out.print(" - ");
-                    raizSubarvore.valor.imprimir();
-                }
-
-
-
-                this.buscar(raizSubarvore.direita, valor);
-
-            }
-            else if(eMenor(valor,raizSubarvore.valor)) {
-                if(raizSubarvore != raiz) {
-                    System.out.print(" - ");
-                    raizSubarvore.valor.imprimir();
-                }
-
-                this.buscar(raizSubarvore.esquerda, valor);
-
-
-            }
-            else {
-                System.out.print(" - ");
-                raizSubarvore.valor.imprimir();
-                System.out.println(" - SIM");
-            }
-        }
-    }
-
-
-
-
-        //caminhamentos
+    //caminhamentos
     public void caminhamentoEmOrdem() {
         caminhamentoEmOrdem(this.raiz);
     }
@@ -525,7 +478,8 @@ class Arvore {
     private void caminhamentoEmOrdem(Nodo raizSubarvore) {
         if (raizSubarvore != null) {
             caminhamentoEmOrdem(raizSubarvore.getEsquerda());
-            System.out.println(" - " + raizSubarvore.getValor());
+            System.out.print(" - ");
+            raizSubarvore.getValor().imprimir();
             caminhamentoEmOrdem(raizSubarvore.getDireita());
         }
     }
@@ -537,7 +491,8 @@ class Arvore {
 
     private void caminhamentoPreOrdem(Nodo raizSubarvore) {
         if (raizSubarvore != null) {
-            System.out.println(" - " + raizSubarvore.getValor());
+            System.out.print(" - ");
+            raizSubarvore.getValor().imprimir();
             caminhamentoPreOrdem(raizSubarvore.getEsquerda());
             caminhamentoPreOrdem(raizSubarvore.getDireita());
         }
@@ -552,8 +507,8 @@ class Arvore {
         if (raizSubarvore != null) {
             caminhamentoPosOrdem(raizSubarvore.getEsquerda());
             caminhamentoPosOrdem(raizSubarvore.getDireita());
-            System.out.println(" - " + raizSubarvore.getValor());
-        }
+            System.out.print(" - ");
+            raizSubarvore.getValor().imprimir();        }
     }
 
 
@@ -575,7 +530,7 @@ public class prova3 {
 
         String linha = MyIO.readLine();
 
-        //preenchimento dos vetores
+       //preenchimento dos vetores
         try {
             while(!linha.equals("FIM")) {
                 String[] valores = linha.split(";");
@@ -602,14 +557,13 @@ public class prova3 {
         //Adicionar na arvore
         for(int i = 0 ; i < AnimalConsole.size(); i++) {
             //System.out.println(AnimalNomes.get(i).toString());
-            arvore.adicionar(AnimalConsole.get(i));
+            arvore.inserir(AnimalConsole.get(i));
         }
+        arvore.inserir(new Animal("Lion"));
 
 		 for(int i = 0 ; i < AnimalPesquisa.size(); i++) {
-             //System.out.println(AnimalNomes.get(i).toString());
-             arvore.buscar(AnimalPesquisa.get(i));
-         }
-
+             System.out.println(AnimalPesquisa.get(i));
+		}
 
 
 
@@ -631,7 +585,12 @@ public class prova3 {
         System.out.println("-----");
 
 
-    }
 
+
+
+
+
+
+    }
 
 }
