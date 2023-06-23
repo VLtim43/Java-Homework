@@ -438,34 +438,81 @@ class Arvore {
 
 
     //comparar
-    public boolean eMaior(Animal animalA, Animal animalB) {
-        return (animalA.nomeCientifico.compareTo(animalB.nomeCientifico) > 0);
 
+    private boolean eMaior(Animal animalA, Animal animalB) {
+        return animalA.nomeCientifico.compareTo(animalB.nomeCientifico) > 0;
     }
 
-    public boolean eMenor(Animal animalA, Animal animalB) {
-        return (animalA.nomeCientifico.compareTo(animalB.nomeCientifico) < 0);
+    private boolean eMenor(Animal animalA, Animal animalB) {
+        return animalA.nomeCientifico.compareTo(animalB.nomeCientifico) <  0;
     }
 
 
     //inserir
-    public void inserir(Animal novo) {
-        this.raiz = inserir(this.raiz, novo);
+    public void adicionar(Animal valor) {
+        if(this.raiz == null)
+            this.raiz = new Nodo(valor);
+        else
+            this.inserir(this.raiz, valor);
     }
 
-    private Nodo inserir(Nodo raizSubarvore, Animal novo) {
-        if (raizSubarvore == null) {
-            raizSubarvore = new Nodo(novo);
-        } else {
-            if (eMaior(raizSubarvore.getValor(), novo)) {
-                raizSubarvore.setEsquerda(inserir(raizSubarvore.getEsquerda(), novo));
-            } else if (eMenor(raizSubarvore.getValor(), novo)) {
-                raizSubarvore.setDireita(inserir(raizSubarvore.getDireita(), novo));
+    private Nodo inserir(Nodo raizSubarvore, Animal valor) {
+        if(raizSubarvore == null) {
+            raizSubarvore = new Nodo(valor);
+        }
+        else {
+
+            if(eMaior(valor,raizSubarvore.valor)) {
+                raizSubarvore.direita = this.inserir(raizSubarvore.direita, valor);
             }
+            else if(eMenor(valor,raizSubarvore.valor)) {
+                raizSubarvore.esquerda = this.inserir(raizSubarvore.esquerda, valor);
+            }
+            //
 
         }
-
         return raizSubarvore;
+    }
+
+
+
+    public void buscar(Animal valor) {
+        this.buscar(this.raiz, valor);
+    }
+
+    public void buscar(Nodo raizSubarvore, Animal valor) {
+
+        if(raizSubarvore == null) {
+            System.out.println(" - NAO");
+        } else {
+
+            if(eMaior(valor,raizSubarvore.valor)) {
+                if(raizSubarvore != raiz) {
+                    System.out.print(" - ");
+                    raizSubarvore.valor.imprimir();
+                }
+
+                this.buscar(raizSubarvore.direita, valor);
+
+            }
+            else if(eMenor(valor,raizSubarvore.valor)) {
+                if(raizSubarvore != raiz) {
+                    System.out.print(" - ");
+                    raizSubarvore.valor.imprimir();
+                }
+
+
+
+                this.buscar(raizSubarvore.esquerda, valor);
+
+
+            }
+            else {
+                System.out.print(" - ");
+                raizSubarvore.valor.imprimir();
+                System.out.println(" - SIM");
+            }
+        }
     }
 
 
@@ -528,6 +575,7 @@ public class prova3 {
         ArrayList<Animal> AnimalPesquisa = new ArrayList<Animal>();
 
 
+
         String linha = MyIO.readLine();
 
        //preenchimento dos vetores
@@ -542,9 +590,15 @@ public class prova3 {
 
 
             linha = MyIO.readLine();
+            while (!linha.equals("FIM")) {
+                String[] tempString = linha.split(";");
+                String firstValue = tempString[0];
 
-            while(!linha.equals("FIM")) {
-                AnimalPesquisa.add(new Animal(linha));
+                for(int i = 0; i < AnimalConsole.size(); i++) {
+                    if (AnimalConsole.get(i).nomeCientifico.equals(firstValue)) {
+                        AnimalPesquisa.add(AnimalConsole.get(i));
+                    }
+                }
                 linha = MyIO.readLine();
             }
 
@@ -555,15 +609,19 @@ public class prova3 {
 
 
         //Adicionar na arvore
-        for(int i = 0 ; i < AnimalConsole.size(); i++) {
-            //System.out.println(AnimalNomes.get(i).toString());
-            arvore.inserir(AnimalConsole.get(i));
+       for (Animal animal : AnimalConsole) {
+            arvore.adicionar(animal);
         }
-        arvore.inserir(new Animal("Lion"));
 
-		 for(int i = 0 ; i < AnimalPesquisa.size(); i++) {
-             System.out.println(AnimalPesquisa.get(i));
-		}
+        for (Animal animal : AnimalPesquisa) {
+            arvore.raiz.valor.imprimir();
+            arvore.buscar(animal);
+        }
+
+
+
+
+
 
 
 
