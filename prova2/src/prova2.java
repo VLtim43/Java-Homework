@@ -371,7 +371,7 @@ class SelectionSort {
     }
 }
 
-public class Filas {
+public class prova2 {
     public static void main(String[] args) {
         // vetor de animais
         Animal[] animais = new Animal[50];
@@ -459,7 +459,7 @@ public class Filas {
             }
         }
 
-        System.err.println("[NUM_COMPARACOES] [" + NUM_COMPARACOES + "]");
+        System.out.println("[NUM_COMPARACOES] [" + NUM_COMPARACOES + "]");
 
     }
 

@@ -1,7 +1,4 @@
 import java.io.BufferedReader;
-import java.io.EOFException;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
@@ -287,13 +284,11 @@ class MyIO {
     }
 }
 
-
-/////////////////////////////////////////////////////////////////////////
-
+//////////////////////////////////////////////////////////////////////////
 
 class Animal {
     private String nome;
-    public String nomeCientifico;
+    private String nomeCientifico;
     private boolean domestico;
     private int peso;
     private int idadeMaxima;
@@ -303,24 +298,13 @@ class Animal {
         this.idadeMaxima = 0;
     }
 
-    public Animal(String nome, String nomeCientifico, boolean domestico,
-                  int peso, int idadeMaxima)
-    {
+    public Animal(String nome, String nomeCientifico, boolean domestico, int peso, int idadeMaxima) {
         super();
         this.nome = nome;
         this.nomeCientifico = nomeCientifico;
         this.domestico = domestico;
         this.peso = peso;
         this.idadeMaxima = idadeMaxima;
-    }
-
-    public Animal(String nome) {
-        super();
-        this.nome = nome;
-        this.nomeCientifico = nome;
-        this.domestico = false;
-        this.peso = 0;
-        this.idadeMaxima = 0;
     }
 
     public String getNome() {
@@ -363,221 +347,28 @@ class Animal {
         this.peso = peso;
     }
 
+    public String toString() {
+        return this.getNome() + " (" + this.nomeCientifico + "), animal "
+                + (this.isDomestico() ? "domestico" : "selvagem") + " com idade maxima de " + this.getIdadeMaxima()
+                + " anos " + "e peso estimado de " + this.getPeso() + " quilos.";
+    }
+
     public void imprimir() {
-        MyIO.println(this.getNome() + " (" + this.nomeCientifico + ")");
-
-    }
-
-
-
-}
-
-
-
-/////////////////////////////////////////////////////////////////////////
-
-
-class Nodo {
-
-    public Animal valor;
-    public Nodo esquerda;
-    public Nodo direita;
-
-    public Animal getValor() {
-        return valor;
-    }
-
-    public void setValor(Animal valor) {
-        this.valor = valor;
-    }
-
-    public Nodo getEsquerda() {
-        return esquerda;
-    }
-
-    public Nodo getDireita() {
-        return direita;
-    }
-
-    public void setEsquerda(Nodo esquerda) {
-        this.esquerda = esquerda;
-    }
-
-    public void setDireita(Nodo direita) {
-        this.direita = direita;
-    }
-
-
-
-    public Nodo() {
-        this.valor = null;
-        this.esquerda = null;
-        this.direita = null;
-    }
-
-    public Nodo(Animal valor) {
-        this.valor = valor;
-        this.esquerda = null;
-        this.direita = null;
+        System.out.println(this.toString());
     }
 }
-
-
-
-/////////////////////////////////////////////////////////////////////////
-
-
-
-class Arvore {
-    public Nodo raiz;
-
-
-    public Arvore() {
-        this.raiz = null;
-    }
-
-
-    //comparar
-
-    private boolean eMaior(Animal animalA, Animal animalB) {
-        return animalA.nomeCientifico.compareTo(animalB.nomeCientifico) > 0;
-    }
-
-    private boolean eMenor(Animal animalA, Animal animalB) {
-        return animalA.nomeCientifico.compareTo(animalB.nomeCientifico) <  0;
-    }
-
-
-    //inserir
-    public void adicionar(Animal valor) {
-        if(this.raiz == null)
-            this.raiz = new Nodo(valor);
-        else
-            this.inserir(this.raiz, valor);
-    }
-
-    private Nodo inserir(Nodo raizSubarvore, Animal valor) {
-        if(raizSubarvore == null) {
-            raizSubarvore = new Nodo(valor);
-        }
-        else {
-
-            if(eMaior(valor,raizSubarvore.valor)) {
-                raizSubarvore.direita = this.inserir(raizSubarvore.direita, valor);
-            }
-            else if(eMenor(valor,raizSubarvore.valor)) {
-                raizSubarvore.esquerda = this.inserir(raizSubarvore.esquerda, valor);
-            }
-            //
-
-        }
-        return raizSubarvore;
-    }
-
-
-
-    public void buscar(Animal valor) {
-        this.buscar(this.raiz, valor);
-    }
-
-    public void buscar(Nodo raizSubarvore, Animal valor) {
-
-        if(raizSubarvore == null) {
-            System.out.println(" - NAO");
-        } else {
-
-            if(eMaior(valor,raizSubarvore.valor)) {
-                if(raizSubarvore != raiz) {
-                    System.out.print(" - ");
-                    raizSubarvore.valor.imprimir();
-                }
-
-                this.buscar(raizSubarvore.direita, valor);
-
-            }
-            else if(eMenor(valor,raizSubarvore.valor)) {
-                if(raizSubarvore != raiz) {
-                    System.out.print(" - ");
-                    raizSubarvore.valor.imprimir();
-                }
-
-
-
-                this.buscar(raizSubarvore.esquerda, valor);
-
-
-            }
-            else {
-                System.out.print(" - ");
-                raizSubarvore.valor.imprimir();
-                System.out.println(" - SIM");
-            }
-        }
-    }
-
-
-
-    //caminhamentos
-    public void caminhamentoEmOrdem() {
-        caminhamentoEmOrdem(this.raiz);
-    }
-
-    private void caminhamentoEmOrdem(Nodo raizSubarvore) {
-        if (raizSubarvore != null) {
-            caminhamentoEmOrdem(raizSubarvore.getEsquerda());
-            System.out.print(" - ");
-            raizSubarvore.getValor().imprimir();
-            caminhamentoEmOrdem(raizSubarvore.getDireita());
-        }
-    }
-
-    //caminhamentos
-    public void caminhamentoPreOrdem() {
-        caminhamentoPreOrdem(this.raiz);
-    }
-
-    private void caminhamentoPreOrdem(Nodo raizSubarvore) {
-        if (raizSubarvore != null) {
-            System.out.print(" - ");
-            raizSubarvore.getValor().imprimir();
-            caminhamentoPreOrdem(raizSubarvore.getEsquerda());
-            caminhamentoPreOrdem(raizSubarvore.getDireita());
-        }
-    }
-
-    //caminhamentos
-    public void caminhamentoPosOrdem() {
-        caminhamentoPosOrdem(this.raiz);
-    }
-
-    private void caminhamentoPosOrdem(Nodo raizSubarvore) {
-        if (raizSubarvore != null) {
-            caminhamentoPosOrdem(raizSubarvore.getEsquerda());
-            caminhamentoPosOrdem(raizSubarvore.getDireita());
-            System.out.print(" - ");
-            raizSubarvore.getValor().imprimir();        }
-    }
-
-
-
-}
-
 
 ///////////////////////////////////////////////////////////////////
 
 
-public class prova3 {
-
+public class prova1 {
     public static void main(String[] args) {
-        MyIO.setCharset("UTF-8");
-
-        Arvore arvore = new Arvore();
         ArrayList<Animal> AnimalConsole = new ArrayList<Animal>();
         ArrayList<Animal> AnimalPesquisa = new ArrayList<Animal>();
 
         String linha = MyIO.readLine();
 
-       //preenchimento dos vetores
+        //preenchimento dos vetores
         try {
             while(!linha.equals("FIM")) {
                 String[] valores = linha.split(";");
@@ -587,55 +378,14 @@ public class prova3 {
                 linha = MyIO.readLine();
             }
 
-
-            linha = MyIO.readLine();
-            while (!linha.equals("FIM")) {
-
-               AnimalPesquisa.add(new Animal(linha));
-
-
-                linha = MyIO.readLine();
-            }
-
         } catch (Exception e) {
             System.out.print(e);
         }
 
 
-        //Adicionar na arvore
-       for (Animal animal : AnimalConsole) {
-            arvore.adicionar(animal);
+        for( Animal x : AnimalConsole) {
+            x.imprimir();
         }
-
-        for (Animal animal : AnimalPesquisa) {
-            arvore.raiz.valor.imprimir();
-            arvore.buscar(animal);
-        }
-
-
-//        for (Animal animal : AnimalPesquisa) {
-//           animal.imprimir();
-//        }
-
-
-        System.out.println("-----");
-
-        //caminhamento Em Ordem
-        System.out.println("[EM ORDEM]");
-        arvore.caminhamentoEmOrdem();
-        System.out.println("-----");
-
-        //caminhamento Pré Ordem
-        char eWithAcute = '\u00C9';
-        System.out.println("[PR" + eWithAcute + " ORDEM]");
-        arvore.caminhamentoPreOrdem();
-        System.out.println("-----");
-
-        //caminhamento Pós Ordem
-        char oWithAcute = '\u00D3';
-        System.out.println("[P" + oWithAcute + "S ORDEM]");
-        arvore.caminhamentoPosOrdem();
-        System.out.println("-----");
 
 
 

@@ -1,0 +1,19 @@
+Gato domestico (Felis silvestris catus), animal domestico com idade maxima de 15 anos.
+Gato-leopardo-asiatico (Felis Prionailurus bengalensis), animal selvagem com idade maxima de 15 anos.
+Informacao de peso do animal incorreta.
+Leao (Panthera leo), animal selvagem com idade maxima de 30 anos.
+Leopardo (Panthera Pardus), animal selvagem com idade maxima de 15 anos.
+Onca-pintada (Panthera onca), animal selvagem com idade maxima de 23 anos.
+Puma (Puma concolor), animal selvagem com idade maxima de 9 anos.
+Jaguatirica (Leopardus pardalis), animal selvagem com idade maxima de 15 anos.
+Lince-iberico (Lynx pardinus), animal selvagem com idade maxima de 13 anos.
+Jaguatirica (Leopardus pardalis), animal selvagem com idade maxima de 15 anos.
+Leopardo (Panthera Pardus), animal selvagem com idade maxima de 15 anos.
+Lince-iberico (Lynx pardinus), animal selvagem com idade maxima de 13 anos.
+Onca-pintada (Panthera onca), animal selvagem com idade maxima de 23 anos.
+Puma (Puma concolor), animal selvagem com idade maxima de 9 anos.
+Leao (Panthera leo), animal selvagem com idade maxima de 30 anos.
+Leopardo (Panthera Pardus), animal selvagem com idade maxima de 15 anos.
+Onca-pintada (Panthera onca), animal selvagem com idade maxima de 23 anos.
+Tigre (Panthera tigris), animal selvagem com idade maxima de 25 anos.
+Informacao de peso do animal incorreta.
