@@ -317,7 +317,7 @@ class Animal {
     public Animal(String nome) {
         super();
         this.nome = nome;
-        this.nomeCientifico = "null";
+        this.nomeCientifico = nome;
         this.domestico = false;
         this.peso = 0;
         this.idadeMaxima = 0;
@@ -591,14 +591,10 @@ public class prova3 {
 
             linha = MyIO.readLine();
             while (!linha.equals("FIM")) {
-                String[] tempString = linha.split(";");
-                String firstValue = tempString[0];
 
-                for(int i = 0; i < AnimalConsole.size(); i++) {
-                    if (AnimalConsole.get(i).nomeCientifico.equals(firstValue)) {
-                        AnimalPesquisa.add(AnimalConsole.get(i));
-                    }
-                }
+               AnimalPesquisa.add(new Animal(linha));
+
+
                 linha = MyIO.readLine();
             }
 
@@ -617,6 +613,11 @@ public class prova3 {
             arvore.raiz.valor.imprimir();
             arvore.buscar(animal);
         }
+
+
+//        for (Animal animal : AnimalPesquisa) {
+//           animal.imprimir();
+//        }
 
 
 
