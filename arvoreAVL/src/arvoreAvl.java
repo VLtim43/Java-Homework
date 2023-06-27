@@ -25,6 +25,7 @@ class ArquivoTextoLeitura {
     public void fecharArquivo() {
         try {
             entrada.close();
+            
         } catch (IOException excecao) {
             System.out.println("Erro no fechamento do arquivo de leitura: " + excecao);
         }
